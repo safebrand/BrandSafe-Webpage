@@ -8,6 +8,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import ResultSafe from "./v1/ResultSafe/App";
+import ResultUnsafe from "./v1/ResultUnsafe/App";
 function App() {
   return (
     <>
@@ -15,6 +16,11 @@ function App() {
         <Route exact path="/" element={<Landing />} />
         <Route exact path="/Detailsentry" element={<DetailsEntry />} />
         <Route exact path="/Detailsentry/resultsafe" element={<ResultSafe />} />
+        <Route
+          exact
+          path="/Detailsentry/resultunsafe"
+          element={<ResultUnsafe />}
+        />
       </Routes>
     </>
   );

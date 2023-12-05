@@ -1,9 +1,11 @@
-import { SideBar } from "../../components/ResultSafe/SiedBar";
+import { ContentSafeDiv } from "../../components/ResultSafe/ContentSafeDiv";
+import { SideBar } from "../../components/shared/SideBar/SideBar";
 
 export default function ResultSafe() {
   return (
-    <section>
+    <section className="flex">
       <SideBar />
+      <ContentSafeDiv />
     </section>
   );
 }
