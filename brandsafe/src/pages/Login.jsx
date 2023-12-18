@@ -3,16 +3,36 @@ import Logo from '../componets/Logo'
 import { TextField } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { SERVER, header } from '../config/api';
+import { toast } from 'react-toastify';
+import Loading from '../componets/Loading';
 
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'all' })
     const [showPassword, setShowPassword] = useState(false)
-
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     const submitLogin = (data) => {
+        setLoading(true)
+        axios
+            .post(`${SERVER}/user/login`, data)
+            .then((res) => {
+                setLoading(false)
+                sessionStorage.setItem('token', res.data.data.sessionId)
+                navigate('/dashboard')  
+            }).catch((err) => {
+                console.log(err)
+                toast.error(err.response.data.message);
+                setLoading(false)
+            })
+    }
 
+    if (loading) {
+        return (<Loading loading={loading} />)
     }
 
     return (
@@ -27,8 +47,8 @@ const Login = () => {
                     <form onSubmit={handleSubmit(submitLogin)} className='flex flex-col gap-6'>
                         <div className='flex flex-col md:flex-row gap-8'>
                             <div className='w-full md:w-[50%]'>
-                                <TextField id="outlined-basic" label="Email" variant="outlined" name='name' sx={{ width: "100%" }}
-                                    {...register('name', {
+                                <TextField id="outlined-basic" label="Email" variant="outlined" name='email' sx={{ width: "100%" }}
+                                    {...register('email', {
                                         required: 'Email is required.',
                                     })}
                                     error={!!errors.name?.message}

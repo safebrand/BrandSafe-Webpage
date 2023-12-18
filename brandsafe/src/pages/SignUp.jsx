@@ -6,6 +6,10 @@ import { useForm } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import Logo from '../componets/Logo';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
+import axios from 'axios'
+import { SERVER } from '../config/api';
+import { toast } from 'react-toastify';
+import Loading from '../componets/Loading';
 
 
 const SignUp = () => {
@@ -13,6 +17,7 @@ const SignUp = () => {
     const [successDialogOpen, setSuccessDialogOpen] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
     const [userEmail, setUserEmail] = useState('');
+    const [loading, setLoading] = useState(false)
 
     const handleOpenSuccessDialog = (email) => {
         setUserEmail(email);
@@ -21,7 +26,21 @@ const SignUp = () => {
 
 
     const submitSignUp = (data) => {
+        setLoading(true)
+        axios.
+            post(`${SERVER}/user/signup`, data)
+            .then((res) => {
+                setLoading(false)
+                handleOpenSuccessDialog(data.email)
+            }).catch((err) => {
+                console.log(err)
+                toast.error(err.response.data.message)
+                setLoading(false)
+            })
+    }
 
+    if (loading) {
+        return (<Loading loading={loading} />)
     }
 
     return (
@@ -108,8 +127,8 @@ const SignUp = () => {
                     <Dialog open={successDialogOpen} >
                         <div className='bg-theme-color'>
                             <div className='flex items-center gap-4 p-4'>
-                                <img src="./Union.svg" alt="logo" className='w-[10%]' />
-                                <h1 className='text-[14px] md:text-[30.47px] font-semibold'>Brand Safe</h1>
+                                <img src="./Union.svg" alt="logo" className='w-[15%] md:w-[10%]' />
+                                <h1 className='text-[18px] md:text-[30.47px] font-semibold'>Brand Safe</h1>
                             </div>
                             <DialogTitle sx={{ color: "green" }}>Email Sent Successfully !!</DialogTitle>
                             <DialogContent>
