@@ -22,9 +22,15 @@ const Login = () => {
             .post(`${SERVER}/user/login`, data)
             .then((res) => {
                 setLoading(false)
+                const user = res.data?.data?.user
+                console.log(user)
+                sessionStorage.setItem('fName', user?.firstName)
+                sessionStorage.setItem('lName', user?.lastName)
+                sessionStorage.setItem('userId', user?.id)
+                sessionStorage.setItem('userUuid', user?.uuid)
+                sessionStorage.setItem('organizationName', user?.organizationName)
                 sessionStorage.setItem('token', res.data.data.sessionId)
-                console.log(res.data.data.user?.organizationName)
-                res.data.data.user?.organizationName ? navigate('/dashboard') : navigate('/addOrganization')
+                user?.organizationName ? navigate('/dashboard') : navigate('/addOrganization')
             }).catch((err) => {
                 console.log(err)
                 toast.error(err.response.data.message);

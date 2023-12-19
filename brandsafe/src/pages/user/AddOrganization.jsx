@@ -5,15 +5,40 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { SERVER } from '../../config/api'
 import { toast } from 'react-toastify'
+import AddURL from '../../componets/sidebar/addModel/AddURL'
+import Domains from '../../componets/Domains'
 
 const AddOrganization = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode: 'all' })
     const [apiSuccess, setApiSuccess] = useState(false)
+    const [organization, setOrganization] = useState([])
+    const userId = sessionStorage.getItem('userId')
+    const organizationName = sessionStorage.getItem('organizationName')
+    const [open, setOpen] = useState(false)
+    const [apiDomainSuccess, setApiDomainSuccess] = useState(false)
 
+    useEffect(() => {
+        axios
+            .get(`${SERVER}/organization?userId=${userId}`)
+            .then((res) => {
+                if (res.data) {
+                    const organization = res.data.data
+                    console.log("orgs", organization)
+                    sessionStorage.setItem('organizationName', organization?.name)
+                    setOrganization(organization)
+                }
+                reset()
+            }).catch((err) => {
+                toast.error(err.response.data.message)
+                console.log(err)
+            })
+    }, [apiSuccess])
+
+    console.log(organization)
 
     const addCompany = (data) => {
         axios
-            .post(`${SERVER}/organization`, data)
+            .post(`${SERVER}/organization`, { ...data, ...{ userId: userId } })
             .then((res) => {
                 setApiSuccess(!apiSuccess)
                 toast.success(res.data.message)
@@ -34,7 +59,7 @@ const AddOrganization = () => {
                     </div>
                     <div className='md:pl-10 flex flex-col gap-10 md:w-[50%] py-10'>
                         <h3 className='text-2xl'>Enter your company's details</h3>
-                        <form action=" " className='flex flex-col gap-4 ' onSubmit={handleSubmit(addCompany)}>
+                        {!organizationName ? <form action=" " className='flex flex-col gap-4 ' onSubmit={handleSubmit(addCompany)}>
                             <TextField id="outlined-basic" label="Company name *" variant="outlined" name='email' sx={{ width: "100%" }}
                                 {...register('name', {
                                     required: 'Company name is required.',
@@ -63,7 +88,20 @@ const AddOrganization = () => {
                                 </div>
                             </div>
                             <button className='primary-button'>Add organization</button>
-                        </form>
+                        </form> :
+                            <div>
+                                <TextField id="outlined-basic" label="Company name *" variant="outlined" name='email' sx={{ width: "100%" }}
+                                    value={organizationName} disabled
+                                />
+                                <div className='flex flex-col sm:flex-row justify-between gap-2'>
+                                    <h3 className='text-2xl py-6'>Company website URL's</h3>
+                                    <button className='secondary-button' onClick={() => setOpen(!open)}>+ Add URL</button>
+                                </div>
+                                <AddURL open={open} setOpen={setOpen} success={apiDomainSuccess} setSuccess={setApiDomainSuccess} organization={organization} />
+                                {organization?.length !== 0 &&
+                                    <Domains success={apiDomainSuccess} organization={organization} />
+                                }
+                            </div>}
                     </div>
                 </div>
             </div>

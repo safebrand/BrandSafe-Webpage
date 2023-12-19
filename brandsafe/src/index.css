@@ -9,9 +9,13 @@ body {
 }
 
 .container {
-    @apply max-w-[1920px] md:h-screen overflow-hidden overflow-y-auto justify-center flex flex-col gap-4 bg-theme-color text-neutral-800 p-4
+    @apply max-w-[1920px] h-screen w-full overflow-hidden overflow-y-auto justify-center flex flex-col gap-4 bg-theme-color text-neutral-800 p-4
 }
 
 .primary-button {
     @apply px-4 py-3 text-white bg-sky-500 w-full md:w-[300px] rounded-md hover:bg-sky-600
+}
+
+.secondary-button {
+    @apply  my-5 px-2 py-2 md:py-0 text-black bg-[#B4EDFF] w-full sm:w-[200px] rounded-full hover:bg-[#a9e7fa]
 }

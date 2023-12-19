@@ -69,7 +69,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function User({ open, setOpen }) {
     const theme = useTheme();
     //const [open, setOpen] = React.useState(false);
-    console.log("role", open)
     const location = useLocation();
     const [currentLocation, setCurrentLocation] = React.useState(location.pathname);
 
@@ -84,13 +83,13 @@ export default function User({ open, setOpen }) {
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <Drawer variant="permanent" open={open} sx={{ mt: "90px" }}>
+            <Drawer variant="permanent" open={open} >
                 <DrawerHeader>
                     <IconButton onClick={() => setOpen(!open)}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : ""}
                     </IconButton>
                 </DrawerHeader>
-                <List sx={{ backgroundColor: "#02C3FF", color: "#fff", height: "100vh" }}>
+                <List sx={{ backgroundColor: "#02C3FF", height: "100vh" }}>
                     <Link to="/dashboard">
                         <ListItem disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
@@ -98,7 +97,7 @@ export default function User({ open, setOpen }) {
                                     minHeight: 48,
                                     justifyContent: open ? 'initial' : 'center',
                                     px: 2.5,
-                                    backgroundColor: currentLocation?.includes('/dashboard') && "theme-color",
+                                    backgroundColor: currentLocation?.includes('/dashboard') && "#B4EDFF",
                                     color: currentLocation?.includes('/dashboard') && "#000",
                                 }}
                             >
@@ -155,7 +154,7 @@ export default function User({ open, setOpen }) {
                                         <DashboardIcon size={'23px'} />
                                     </ListItemIcon>
                                 </Tooltip>}
-                                <ListItemText primary={"Evidence Expertise"} sx={{ opacity: open ? 1 : 0, fontFamily: "fantasy" }} />
+                                <ListItemText primary={"Profile"} sx={{ opacity: open ? 1 : 0, fontFamily: "fantasy" }} />
                             </ListItemButton>
                         </ListItem>
                     </Link>
@@ -163,7 +162,6 @@ export default function User({ open, setOpen }) {
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, overflow: "hidden", overflowY: "auto", minWidth: "400px" }}>
                 <Box>
-                    <DrawerHeader />
                     <Outlet />
                 </Box>
 
