@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-    @apply max-w-[1920px] max-h-[1080px] h-screen justify-center flex flex-col gap-4 bg-theme-color text-neutral-800 p-4
+    @apply max-w-[1920px] md:h-screen overflow-hidden overflow-y-auto justify-center flex flex-col gap-4 bg-theme-color text-neutral-800 p-4
 }
 
 .primary-button {

@@ -23,7 +23,8 @@ const Login = () => {
             .then((res) => {
                 setLoading(false)
                 sessionStorage.setItem('token', res.data.data.sessionId)
-                navigate('/dashboard')  
+                console.log(res.data.data.user?.organizationName)
+                res.data.data.user?.organizationName ? navigate('/dashboard') : navigate('/addOrganization')
             }).catch((err) => {
                 console.log(err)
                 toast.error(err.response.data.message);
