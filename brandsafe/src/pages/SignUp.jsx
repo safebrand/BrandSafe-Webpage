@@ -45,6 +45,7 @@ const SignUp = () => {
 
     return (
         <>
+            <title>SignUp| Brand Safe </title>
             <div className='container theme-color'>
                 <div className='flex flex-col gap-8 items-center justify-center'>
                     <Logo />

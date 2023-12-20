@@ -26,6 +26,7 @@ const openedMixin = (theme) => ({
     overflowX: 'hidden',
 });
 
+
 const closedMixin = (theme) => ({
     transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
@@ -43,6 +44,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     alignItems: 'center',
     justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
+    fontFamily: "Lexend Deca, sans-serif",
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
 }));
@@ -52,7 +54,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     ({ theme, open }) => ({
         width: drawerWidth,
         flexShrink: 0,
-        fontFamily: "Poppins",
+        fontFamily: "Lexend Deca, sans-serif",
         whiteSpace: 'nowrap',
         boxSizing: 'border-box',
         ...(open && {
@@ -81,10 +83,10 @@ export default function User({ open, setOpen }) {
 
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex' }} >
             <CssBaseline />
             <Drawer variant="permanent" open={open} >
-                <DrawerHeader>
+                <DrawerHeader sx={{ backgroundColor: "#02C3FF" }}>
                     <IconButton onClick={() => setOpen(!open)}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : ""}
                     </IconButton>
@@ -97,41 +99,8 @@ export default function User({ open, setOpen }) {
                                     minHeight: 48,
                                     justifyContent: open ? 'initial' : 'center',
                                     px: 2.5,
-                                    backgroundColor: currentLocation?.includes('/dashboard') && "#B4EDFF",
+                                    backgroundColor: currentLocation?.includes('/dashboard') && "#1381a3db",
                                     color: currentLocation?.includes('/dashboard') && "#000",
-                                }}
-                            >
-                                {open ? <ListItemIcon
-                                    sx={{
-                                        minWidth: 0,
-                                        mr: open ? 3 : 'auto',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    <DashboardIcon size={'23px'} />
-                                </ListItemIcon> : <Tooltip title={"Dashboard"} placement='right'>
-                                    <ListItemIcon
-                                        sx={{
-                                            minWidth: 0,
-                                            mr: open ? 3 : 'auto',
-                                            justifyContent: 'center',
-                                        }}
-                                    >
-                                        <DashboardIcon size={'23px'} />
-                                    </ListItemIcon>
-                                </Tooltip>}
-                                <ListItemText primary={"Dashboard"} sx={{ opacity: open ? 1 : 0, fontFamily: "fantasy" }} />
-                            </ListItemButton>
-                        </ListItem>
-                    </Link>
-                    <Link to="/Evidence-Expertise" >
-                        <ListItem disablePadding sx={{ display: 'block' }}>
-                            <ListItemButton
-                                sx={{
-                                    minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    px: 2.5,
-                                    backgroundColor: (currentLocation?.includes('/Evidence-Expertise') || currentLocation?.includes('/track-applications')) && "#f0f0f0"
                                 }}
                             >
                                 {open ? <ListItemIcon
@@ -142,7 +111,41 @@ export default function User({ open, setOpen }) {
 
                                     }}
                                 >
-                                    <DashboardIcon size={'23px'} />
+                                    <DashboardIcon size={'23px'} sx={{ color: "white" }} />
+                                </ListItemIcon> : <Tooltip title={"Dashboard"} placement='right'>
+                                    <ListItemIcon
+                                        sx={{
+                                            minWidth: 0,
+                                            mr: open ? 3 : 'auto',
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        <DashboardIcon size={'23px'} sx={{ color: "white" }} />
+                                    </ListItemIcon>
+                                </Tooltip>}
+                                <ListItemText primary={"Dashboard"} sx={{ opacity: open ? 1 : 0, color: "white" }} />
+                            </ListItemButton>
+                        </ListItem>
+                    </Link>
+                    <Link to="/profile" >
+                        <ListItem disablePadding sx={{ display: 'block' }}>
+                            <ListItemButton
+                                sx={{
+                                    minHeight: 48,
+                                    justifyContent: open ? 'initial' : 'center',
+                                    px: 2.5,
+                                    backgroundColor: currentLocation?.includes('/profile') && "#1381a3db"
+                                }}
+                            >
+                                {open ? <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        mr: open ? 3 : 'auto',
+                                        justifyContent: 'center',
+
+                                    }}
+                                >
+                                    <DashboardIcon size={'23px'} sx={{ color: "white" }} />
                                 </ListItemIcon> : <Tooltip title={"Profile"} placement='right'>
                                     <ListItemIcon
                                         sx={{
@@ -151,17 +154,17 @@ export default function User({ open, setOpen }) {
                                             justifyContent: 'center',
                                         }}
                                     >
-                                        <DashboardIcon size={'23px'} />
+                                        <DashboardIcon size={'23px'} sx={{ color: "white" }} />
                                     </ListItemIcon>
                                 </Tooltip>}
-                                <ListItemText primary={"Profile"} sx={{ opacity: open ? 1 : 0, fontFamily: "fantasy" }} />
+                                <ListItemText primary={"Profile"} sx={{ opacity: open ? 1 : 0, color: "white" }} />
                             </ListItemButton>
                         </ListItem>
                     </Link>
                 </List>
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, overflow: "hidden", overflowY: "auto", minWidth: "400px" }}>
-                <Box>
+                <Box sx={{mt:"80px"}}>
                     <Outlet />
                 </Box>
 

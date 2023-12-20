@@ -43,6 +43,7 @@ const VerifyEmail = () => {
     }
     return (
         <>
+            <title>Verify Email| Brand Safe </title>
             <div className='container theme-color'>
                 <div className='flex flex-col gap-8 items-center justify-center'>
                     <Logo />

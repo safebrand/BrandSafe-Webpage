@@ -18,7 +18,7 @@ import { Avatar } from '@mui/material';
 
 const AppBar = styled(MuiAppBar, {
 })(({ theme }) => ({
-    zIndex: theme.zIndex.drawer +1,
+    zIndex: theme.zIndex.drawer + 1,
 }));
 
 
@@ -104,10 +104,10 @@ export default function AfterLoginNavbar({ open, setOpen }) {
                 <div className='flex gap-3 items-center justify-center'>
                     <div>
                         <Avatar id="profile" className='uppercase' sx={{ width: 70, height: 70 }}
-                            {...stringAvatar(user?.firstName + " " + user?.lastName)} />
+                            {...stringAvatar(sessionStorage.getItem('fName') + " " + sessionStorage.getItem('lName'))} />
                     </div>
                     <div>
-                        <p className='text-[18px]'>{user?.firstName}{` ${user?.lastName}`}</p>
+                        <p className='text-[18px]'>{sessionStorage.getItem('fName')}{` ${sessionStorage.getItem('lName')}`}</p>
                         <p className='text-[14px] text-gray-600'>{user?.userRole === 2 ? "Company Admin" : user?.userRole === 3 ? "College Admin" : user?.userRole === 43 ? "Jobseeker" : user?.userRole === 1 ? "Assert Admin" : user?.userRole === 8 ? "Organisation Manager" : user?.userRole === 6 ? "Evaluator" : user?.userRole === 4 ? "Company Employee" : user?.userRole === 5 ? "Student" : ""}</p>
                     </div>
                 </div>
@@ -179,7 +179,7 @@ export default function AfterLoginNavbar({ open, setOpen }) {
                     color="inherit"
                 >
                     <Avatar id="profile" className='uppercase' sx={{ width: 90, height: 90 }}
-                        {...stringAvatar(user?.firstName + " " + user?.lastName)} />
+                        {...stringAvatar(sessionStorage.getItem('fName') + " " + sessionStorage.getItem('lName'))} />
                 </IconButton>
                 <p>Profile</p>
             </MenuItem>
@@ -208,13 +208,15 @@ export default function AfterLoginNavbar({ open, setOpen }) {
                         sx={{ mr: 2 }}
                         onClick={() => setOpen(!open)}
                     >
-                        <MenuIcon />
+                        <MenuIcon sx={{ color: "white" }} />
                     </IconButton>
 
-                    <Link to="/"><div className='flex justify-normal items-center gap-3'>
-                    <img src="../Union.png" alt="logo" className='w-[20%]' />
-                    <p className='font-semibold text-2xl'>BrandSafe</p>
-                    </div></Link>
+                    {!open ?<Link to="/"><div className='flex justify-normal items-center gap-3'>
+                        <img src="../Union.png" alt="logo" className='w-[20%]' />
+                        <p className='text-[24px] space-x-1'>Brand Safe</p>
+                    </div></Link>:<Link to="/"><div className='flex justify-normal items-center gap-3'>
+                        <img src="../logo.png" alt="logo" className='w-[90%]' />
+                    </div></Link>}
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex', } }}>
                         <Link to="/support" className='hover:underline mt-[19px]'>
@@ -240,7 +242,7 @@ export default function AfterLoginNavbar({ open, setOpen }) {
                             color="inherit"
                         >
                             <Avatar id="profile" className='uppercase' sx={{ width: 90, height: 90 }}
-                                {...stringAvatar(user?.firstName + " " + user?.lastName)} />
+                                {...stringAvatar(sessionStorage.getItem('fName') + " " + sessionStorage.getItem("lName"))} />
                         </IconButton>
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

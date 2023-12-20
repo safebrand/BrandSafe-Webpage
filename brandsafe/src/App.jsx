@@ -5,6 +5,7 @@ import VerifyEmail from './pages/VerifyEmail'
 import AfterLoginLayout from './componets/layout/AfterLoginLayout'
 import DashBoard from './pages/user/DashBoard'
 import AddOrganization from './pages/user/AddOrganization'
+import Profile from './pages/user/Profile'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path='/addOrganization' element={<AddOrganization />} />
         <Route path='/' element={<AfterLoginLayout />}>
           <Route path='dashboard' element={<DashBoard />} />
+          <Route path='profile' element={<Profile />} />
         </Route>
       </Routes>
     </>

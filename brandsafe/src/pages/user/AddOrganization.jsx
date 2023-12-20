@@ -5,8 +5,8 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { SERVER } from '../../config/api'
 import { toast } from 'react-toastify'
-import AddURL from '../../componets/sidebar/addModel/AddURL'
 import Domains from '../../componets/Domains'
+import AddURL from '../../componets/addModel/AddURL'
 
 const AddOrganization = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode: 'all' })
@@ -25,11 +25,14 @@ const AddOrganization = () => {
                     const organization = res.data.data
                     console.log("orgs", organization)
                     sessionStorage.setItem('organizationName', organization?.name)
+                    sessionStorage.setItem('organizationId', organization?.id)
                     setOrganization(organization)
                 }
                 reset()
             }).catch((err) => {
-                toast.error(err.response.data.message)
+                if (err.response.data.message !== "Organization not found") {
+                    toast.error(err.response.data.message)
+                }
                 console.log(err)
             })
     }, [apiSuccess])
@@ -50,6 +53,7 @@ const AddOrganization = () => {
 
     return (
         <>
+            <title>Add organization | Brand Safe </title>
             <div className='container bg-theme-color'>
 
                 <div className='md:flex gap-5 px-4 lg:px-20 items-center md:divide-x-2 divide-sky-300'>

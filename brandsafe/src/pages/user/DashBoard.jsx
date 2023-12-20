@@ -3,9 +3,12 @@ import React from 'react'
 const DashBoard = () => {
   return (
     <>
-    <div>
-      
-    </div>
+      <title>Dashboard | Brand Safe </title>
+      <div className=''>
+        <div className='px-10'>
+
+        </div>
+      </div>
     </>
   )
 }

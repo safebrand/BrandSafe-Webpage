@@ -29,6 +29,7 @@ const Login = () => {
                 sessionStorage.setItem('userId', user?.id)
                 sessionStorage.setItem('userUuid', user?.uuid)
                 sessionStorage.setItem('organizationName', user?.organizationName)
+                sessionStorage.setItem('organizationId', user?.organizationId)
                 sessionStorage.setItem('token', res.data.data.sessionId)
                 user?.organizationName ? navigate('/dashboard') : navigate('/addOrganization')
             }).catch((err) => {
@@ -44,6 +45,7 @@ const Login = () => {
 
     return (
         <>
+            <title>Login| Brand Safe </title>
             <div className='container theme-color'>
                 <div className='flex flex-col gap-8 items-center justify-center'>
                     <Logo />

@@ -2,7 +2,7 @@ import { Dialog, DialogContent, DialogTitle, TextField } from '@mui/material'
 import axios from 'axios'
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { SERVER } from '../../../config/api'
+import { SERVER } from '../../config/api'
 import { toast } from 'react-toastify'
 
 const AddURL = ({ organization, open, setOpen, success, setSuccess }) => {
