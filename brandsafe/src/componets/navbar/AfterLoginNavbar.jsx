@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import { styled, alpha, useTheme } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -62,6 +62,8 @@ export default function AfterLoginNavbar({ open, setOpen }) {
     const navigate = useNavigate()
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const [drawerOpen, setDrawerOpen] = React.useState(false);
+    const theme = useTheme();
+    const isMdScreen = theme.breakpoints.up('md');
 
     console.log(location)
 
@@ -198,7 +200,7 @@ export default function AfterLoginNavbar({ open, setOpen }) {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="fixed" sx={{ bgcolor: "transparent", color: "#26496E" }} >
+              <AppBar position="fixed" sx={{ bgcolor: "transparent", backdropFilter: isMdScreen ? "" :'blur(10px)', color: "#26496E" }}>
                 <Toolbar>
                     <IconButton
                         size="large"
@@ -208,7 +210,7 @@ export default function AfterLoginNavbar({ open, setOpen }) {
                         sx={{ mr: 2 }}
                         onClick={() => setOpen(!open)}
                     >
-                        <MenuIcon sx={{ color: "white" }} />
+                        <MenuIcon  />
                     </IconButton>
 
                     {!open ?<Link to="/"><div className='flex justify-normal items-center gap-3'>

@@ -6,6 +6,7 @@ import AfterLoginLayout from './componets/layout/AfterLoginLayout'
 import DashBoard from './pages/user/DashBoard'
 import AddOrganization from './pages/user/AddOrganization'
 import Profile from './pages/user/Profile'
+import PageNotFound from './pages/PageNotFound'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         <Route index path='/login' element={<Login />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/verify-email/:token' element={<VerifyEmail />} />
+        <Route path='*' element={<PageNotFound />} />
 
 
         <Route path='/addOrganization' element={<AddOrganization />} />

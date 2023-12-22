@@ -63,7 +63,7 @@ const AddOrganization = () => {
                     </div>
                     <div className='md:pl-10 flex flex-col gap-10 md:w-[50%] py-10'>
                         <h3 className='text-2xl'>Enter your company's details</h3>
-                        {!organizationName ? <form action=" " className='flex flex-col gap-4 ' onSubmit={handleSubmit(addCompany)}>
+                        {(organizationName === null || organizationName === 'undefined') ? <form action=" " className='flex flex-col gap-4 ' onSubmit={handleSubmit(addCompany)}>
                             <TextField id="outlined-basic" label="Company name *" variant="outlined" name='email' sx={{ width: "100%" }}
                                 {...register('name', {
                                     required: 'Company name is required.',
@@ -94,15 +94,19 @@ const AddOrganization = () => {
                             <button className='primary-button'>Add organization</button>
                         </form> :
                             <div>
-                                <TextField id="outlined-basic" label="Company name *" variant="outlined" name='email' sx={{ width: "100%" }}
-                                    value={organizationName} disabled
-                                />
+                                <div className='flex gap-4 mb-10'>
+                                    <div className='capitalize flex gap-4 text-2xl'>
+                                        <p className='text-2xl font-semibold'>Company Name:</p>
+                                        {organizationName}
+
+                                    </div>
+                                </div>
                                 <div className='flex flex-col sm:flex-row justify-between gap-2'>
                                     <h3 className='text-2xl py-6'>Company website URL's</h3>
                                     <button className='secondary-button' onClick={() => setOpen(!open)}>+ Add URL</button>
                                 </div>
                                 <AddURL open={open} setOpen={setOpen} success={apiDomainSuccess} setSuccess={setApiDomainSuccess} organization={organization} />
-                                {organization?.length !== 0 &&
+                                {organization?.name !== null &&
                                     <Domains success={apiDomainSuccess} organization={organization} />
                                 }
                             </div>}

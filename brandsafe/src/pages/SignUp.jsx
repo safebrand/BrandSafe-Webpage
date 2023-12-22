@@ -53,7 +53,7 @@ const SignUp = () => {
                 </div>
                 <div className='my-8 flex flex-col gap-10 px-4 md:px-80'>
                     <h2 className='text-4xl font-semibold md:mx-auto'>Sign Up</h2>
-                    <form autoComplete='off' className='flex flex-col gap-4 md:w-[50%] md:mx-auto ' onSubmit={handleSubmit(submitSignUp)}>
+                    <form autoComplete='off' className='flex flex-col gap-4 md:w-[50%] md:mx-auto' onSubmit={handleSubmit(submitSignUp)}>
                         <TextField
                             label="Email"
                             variant="outlined"

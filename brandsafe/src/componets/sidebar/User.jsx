@@ -163,7 +163,7 @@ export default function User({ open, setOpen }) {
                     </Link>
                 </List>
             </Drawer>
-            <Box component="main" sx={{ flexGrow: 1, overflow: "hidden", overflowY: "auto", minWidth: "400px" }}>
+            <Box component="main" sx={{ flexGrow: 1, overflow: "hidden", overflowY: "auto"}}>
                 <Box sx={{mt:"80px"}}>
                     <Outlet />
                 </Box>
