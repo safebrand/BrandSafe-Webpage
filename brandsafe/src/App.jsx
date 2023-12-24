@@ -7,6 +7,7 @@ import DashBoard from './pages/user/DashBoard'
 import AddOrganization from './pages/user/AddOrganization'
 import Profile from './pages/user/Profile'
 import PageNotFound from './pages/PageNotFound'
+import SimilarDomainDetails from './pages/user/similarDomainDetails'
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Route path='/addOrganization' element={<AddOrganization />} />
         <Route path='/' element={<AfterLoginLayout />}>
           <Route path='dashboard' element={<DashBoard />} />
+          <Route path='dashboard/:uuid' element={<SimilarDomainDetails />} />
           <Route path='profile' element={<Profile />} />
         </Route>
       </Routes>

@@ -20,6 +20,10 @@ body {
     @apply  my-5 px-2 py-2 md:py-0 text-black bg-[#B4EDFF] w-full sm:w-[200px] rounded-full hover:bg-[#a9e7fa]
 }
 
+.table-button {
+    @apply   px-2 py-1 text-black bg-[#B4EDFF] w-full rounded-full hover:bg-[#a9e7fa]
+}
+
 .cancel-button {
     @apply  px-4 py-3 text-red-500 bg-red-50 w-full sm:w-[100px] text-center rounded-md hover:bg-red-100 cursor-pointer
 }

@@ -9,6 +9,7 @@ import AddURL from '../../componets/addModel/AddURL'
 
 const DashBoard = () => {
   const [domains, setDomains] = useState([])
+  const [domainsCount, setDomainsCount] = useState([])
   const organizationId = sessionStorage.getItem("organizationId")
   const [open, setOpen] = useState(false)
   const [apiDomainSuccess, setApiDomainSuccess] = useState(false)
@@ -24,8 +25,18 @@ const DashBoard = () => {
           toast.error(err.response.data.message)
           console.log(err)
         })
+
+      axios
+        .get(`${SERVER}/domain/count-of-domains/${organizationId}`)
+        .then((res) => {
+          const domains = res.data.data
+          setDomainsCount(domains)
+        }).catch((err) => {
+          toast.error(err.response.data.message)
+          console.log(err)
+        })
     }
-  }, [organizationId])
+  }, [organizationId, apiDomainSuccess])
 
 
   return (
@@ -52,18 +63,20 @@ const DashBoard = () => {
           </div>
           <div className='flex flex-col gap-2 my-4'>
             <h3 className='font-semibold'>Your domain's Report</h3>
-            <table className='md:w-[50%] ring-[1px] ring-gray-200 divide-y-[1px]'>
+            <table className='md:w-[50%] ring-[1px] ring-gray-300 divide-y-[1px] rounded-md'>
               <thead>
-                <tr className='bg-sky-50 divide-x-[1px]'>
+                <tr className='bg-slate-700 text-white divide-x-[1px] divide-gray-300'>
                   <td className='px-4 py-2'>Your Domain</td>
                   <td className='px-4 py-2 text-center'>No of Similar Domains</td>
                 </tr>
               </thead>
               <tbody className=''>
-                {domains?.map((domain, index) =>
-                  <tr key={index} className='divide-x-[1px] even:bg-gray-50'>
-                    <td className='px-4 py-2'>{domain.domainURL}</td>
-                    <td className='px-4 py-2 text-center'>{index+1}</td>
+                {domainsCount?.map((domain, index) =>
+                  <tr key={index} className='divide-x-[1px] divide-gray-300 even:bg-gray-100'>
+                    <Link to={`${domain?.uuid}`}>
+                      <td className='px-4 py-2 text-blue-600 hover:underline cursor-pointer'>{domain.domainURL}</td>
+                    </Link>
+                    <td className='px-4 py-2 text-center'>{domain.similar_domain_count}</td>
                   </tr>
                 )}
               </tbody>
@@ -71,7 +84,7 @@ const DashBoard = () => {
           </div>
         </div>
         <AddURL open={open} setOpen={setOpen} success={apiDomainSuccess} setSuccess={setApiDomainSuccess} organization={{ organization: { id: organizationId } }} />
-      </div>
+      </div >
     </>
   )
 }
