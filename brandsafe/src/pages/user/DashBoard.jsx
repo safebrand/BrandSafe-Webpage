@@ -4,7 +4,7 @@ import { SERVER } from '../../config/api'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { Add } from '@mui/icons-material'
+import { Add, OpenInNew } from '@mui/icons-material'
 import AddURL from '../../componets/addModel/AddURL'
 
 const DashBoard = () => {
@@ -74,7 +74,9 @@ const DashBoard = () => {
                 {domainsCount?.map((domain, index) =>
                   <tr key={index} className='divide-x-[1px] divide-gray-300 even:bg-gray-100'>
                     <Link to={`${domain?.uuid}`}>
-                      <td className='px-4 py-2 text-blue-600 hover:underline cursor-pointer'>{domain.domainURL}</td>
+                      <td className='px-4 py-2 text-blue-600 hover:underline cursor-pointer flex items-center gap-1'>
+                        {domain.domainURL}<OpenInNew fontSize='34px' />
+                      </td>
                     </Link>
                     <td className='px-4 py-2 text-center'>{domain.similar_domain_count}</td>
                   </tr>

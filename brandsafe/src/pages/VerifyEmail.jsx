@@ -34,9 +34,9 @@ const VerifyEmail = () => {
     useEffect(() => {
         arr && setValue('token', arr[arr?.length - 1])
     })
-    // if (arr[arr?.length - 1]) {
-    //     handleEmailVerify()
-    // }
+    if (arr[arr?.length - 1]) {
+        handleEmailVerify()
+    }
 
     if (loading) {
         return (<Loading loading={loading} />)

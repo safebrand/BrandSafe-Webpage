@@ -1,4 +1,4 @@
-export const SERVER = window.location.hostname === "localhost" ? 'http://localhost:3000' : ""
+export const SERVER = window.location.hostname === "localhost" ? 'http://localhost:5000' : ""
 
 export const header = {
     headers: {

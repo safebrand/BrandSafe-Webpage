@@ -60,8 +60,8 @@ const Login = () => {
                                     {...register('email', {
                                         required: 'Email is required.',
                                     })}
-                                    error={!!errors.name?.message}
-                                    helperText={errors.name?.message ? errors?.name.message : ""}
+                                    error={!!errors.email?.message}
+                                    helperText={errors.email?.message ? errors?.email.message : ""}
                                 />
                             </div>
                             <div className='relative w-full md:w-[50%]'>
