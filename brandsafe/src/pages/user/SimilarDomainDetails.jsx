@@ -16,7 +16,7 @@ const SimilarDomainDetails = () => {
 
     useEffect(() => {
         axios
-            .get(`${SERVER}/similarDomain/similar-domain-of-original-domain/${uuid}`)
+            .get(`${SERVER}/domain/by-uuid/${uuid}/similar-domain`)
             .then((res) => {
                 const domains = res.data.data
                 setDomains(domains)
@@ -28,7 +28,7 @@ const SimilarDomainDetails = () => {
 
     const handleReport = () => {
         axios
-            .put(`${SERVER}/similarDomain/by-id/${selectedDomain.id}`, {
+            .put(`${SERVER}/similarDomain/by-uuid/${selectedDomain.uuid}`, {
                 "reported": 1
             })
             .then((res) => {

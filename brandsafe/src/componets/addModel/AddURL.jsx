@@ -9,7 +9,7 @@ const AddURL = ({ organization, open, setOpen, success, setSuccess }) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode: 'all' })
 
     const addUrl = (data) => {
-        axios.post(`${SERVER}/domain`, { ...data, ...{ organizationId: organization.id || sessionStorage.getItem("organizationId")} })
+        axios.post(`${SERVER}/organization/${sessionStorage.getItem("organizationId")}/domain`, data)
             .then((res) => {
                 setOpen(!open)
                 setSuccess(!success)

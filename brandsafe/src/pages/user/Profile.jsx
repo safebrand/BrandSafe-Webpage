@@ -43,7 +43,7 @@ const Profile = () => {
                 sessionStorage.setItem('fName', data.firstName)
                 sessionStorage.setItem('lName', data.lastName)
                 axios
-                    .put(`${SERVER}/organization/${organizationId}`, {
+                    .put(`${SERVER}/organization/by-uuid/${organizationId}`, {
                         name: data.name
                     }).then((res) => {
                         toast.success('Personal Details Updated')
