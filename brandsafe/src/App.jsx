@@ -7,7 +7,7 @@ import DashBoard from './pages/user/DashBoard'
 import AddOrganization from './pages/user/AddOrganization'
 import Profile from './pages/user/Profile'
 import PageNotFound from './pages/PageNotFound'
-import SimilarDomainDetails from './pages/user/similarDomainDetails'
+import SimilarDomainDetails from './pages/user/SimilarDomainDetails'
 
 function App() {
 
