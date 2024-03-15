@@ -7,6 +7,8 @@ import { SERVER } from "../../config/api";
 import { toast } from "react-toastify";
 import Domains from "../../componets/Domains";
 import AddURL from "../../componets/addModel/AddURL";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../../redux/slices/userSlice";
 
 const AddOrganization = () => {
   const {
@@ -17,20 +19,24 @@ const AddOrganization = () => {
   } = useForm({ mode: "all" });
   const [apiSuccess, setApiSuccess] = useState(false);
   const [organization, setOrganization] = useState([]);
-  const userId = sessionStorage.getItem("userId");
-  const organizationName = sessionStorage.getItem("organizationName");
+  const user = useSelector((state) => state?.persistedReducer.user);
   const [open, setOpen] = useState(false);
   const [apiDomainSuccess, setApiDomainSuccess] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axios
-      .get(`${SERVER}/organization/user/${userId}`)
+      .get(`${SERVER}/organization/user/${user.id}`)
       .then((res) => {
         if (res.data) {
           const organization = res.data.data;
           console.log("orgs", organization);
-          sessionStorage.setItem("organizationName", organization?.name);
-          sessionStorage.setItem("organizationId", organization?.uuid);
+          dispatch(
+            updateUser({
+              organizationName: organization?.name,
+              organizationId: organization.uuid,
+            })
+          );
           setOrganization(organization);
         }
         reset();
@@ -47,7 +53,7 @@ const AddOrganization = () => {
 
   const addCompany = (data) => {
     axios
-      .post(`${SERVER}/organization`, { ...data, ...{ userId: userId } })
+      .post(`${SERVER}/organization`, { ...data, ...{ userId: user.id } })
       .then((res) => {
         setApiSuccess(!apiSuccess);
         toast.success(res.data.message);
@@ -59,7 +65,7 @@ const AddOrganization = () => {
       });
   };
 
-  console.log(typeof organizationName);
+  console.log(typeof user.organizationName);
 
   return (
     <>
@@ -147,7 +153,7 @@ const AddOrganization = () => {
                     <p className="text-2xl font-semibold text-gray-600">
                       Company Name:
                     </p>
-                    {organizationName}
+                    {user.organizationName}
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row justify-between gap-2">

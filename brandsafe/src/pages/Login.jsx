@@ -8,6 +8,8 @@ import axios from 'axios';
 import { SERVER, header } from '../config/api';
 import { toast } from 'react-toastify';
 import Loading from '../componets/Loading';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../redux/slices/userSlice';
 
 
 const Login = () => {
@@ -15,6 +17,7 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const submitLogin = (data) => {
         setLoading(true)
@@ -23,14 +26,7 @@ const Login = () => {
             .then((res) => {
                 setLoading(false)
                 const user = res.data?.data?.user
-                console.log(user)
-                sessionStorage.setItem('fName', user?.firstName)
-                sessionStorage.setItem('lName', user?.lastName)
-                sessionStorage.setItem('userId', user?.id)
-                sessionStorage.setItem('userUuid', user?.uuid)
-                sessionStorage.setItem('organizationName', user?.organizationName)
-                sessionStorage.setItem('organizationId', user?.organizationId)
-                sessionStorage.setItem('token', res.data.data.sessionId)
+                dispatch(setUser(user))
                 user?.organizationName ? navigate('/dashboard') : navigate('/addOrganization')
             }).catch((err) => {
                 console.log(err)

@@ -4,12 +4,14 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { SERVER } from '../../config/api'
 import { toast } from 'react-toastify'
+import { useSelector } from 'react-redux'
 
 const AddURL = ({ organization, open, setOpen, success, setSuccess }) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode: 'all' })
+    const user = useSelector((state) => state?.persistedReducer.user);
 
     const addUrl = (data) => {
-        axios.post(`${SERVER}/organization/${sessionStorage.getItem("organizationId")}/domain`, data)
+        axios.post(`${SERVER}/organization/${user.organizationId}/domain`, data)
             .then((res) => {
                 setOpen(!open)
                 setSuccess(!success)

@@ -1,4 +1,4 @@
-import { Chip, TextField } from "@mui/material";
+import { Button, Chip, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { SERVER } from "../../config/api";
 import { toast } from "react-toastify";
@@ -6,18 +6,20 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Add, OpenInNew } from "@mui/icons-material";
 import AddURL from "../../componets/addModel/AddURL";
+import { useSelector } from "react-redux";
 
 const DashBoard = () => {
   const [domains, setDomains] = useState([]);
   const [domainsCount, setDomainsCount] = useState([]);
-  const organizationId = sessionStorage.getItem("organizationId");
+  const user = useSelector((state) => state?.persistedReducer.user);
   const [open, setOpen] = useState(false);
   const [apiDomainSuccess, setApiDomainSuccess] = useState(false);
+  const [isScanning, setIsScanning] = useState();
 
   useEffect(() => {
-    if (organizationId) {
+    if (user?.organizationId) {
       axios
-        .get(`${SERVER}/organization/${organizationId}/domain`)
+        .get(`${SERVER}/organization/${user?.organizationId}/domain`)
         .then((res) => {
           const domains = res.data.data;
           setDomains(domains);
@@ -28,7 +30,9 @@ const DashBoard = () => {
         });
 
       axios
-        .get(`${SERVER}/organization/${organizationId}/domain/count-of-domains`)
+        .get(
+          `${SERVER}/organization/${user?.organizationId}/domain/count-of-domains`
+        )
         .then((res) => {
           const domains = res.data.data;
           setDomainsCount(domains);
@@ -38,7 +42,7 @@ const DashBoard = () => {
           console.log(err);
         });
     }
-  }, [organizationId, apiDomainSuccess]);
+  }, [user?.organizationId, apiDomainSuccess]);
 
   return (
     <>
@@ -84,6 +88,7 @@ const DashBoard = () => {
                   <td className="px-4 py-2 text-center">
                     No of Similar Domains
                   </td>
+                  <td className="px-4 py-2 text-center">Action</td>
                 </tr>
               </thead>
               <tbody className="">
@@ -94,18 +99,28 @@ const DashBoard = () => {
                   >
                     {domain.similarDomainCount > 0 ? (
                       <Link to={`${domain?.uuid}`}>
-                        <td className="px-4 py-2 text-blue-600 hover:underline cursor-pointer flex items-center gap-1">
+                        <td className="px-4 py-2 text-blue-600 hover:underline cursor-pointer flex items-center gap-1 justify-center">
                           {domain.domainURL}
                           <OpenInNew fontSize="34px" />
                         </td>
                       </Link>
                     ) : (
-                      <td className="px-4 py-2 text-blue-600 flex items-center gap-1">
+                      <td className="px-4 py-2 text-blue-600 flex items-center gap-1 justify-center">
                         {domain.domainURL}
                       </td>
                     )}
                     <td className="px-4 py-2 text-center">
                       {domain.similarDomainCount}
+                    </td>
+                    <td className={`px-4 py-1 text-center min-w-[150px]`}>
+                      <Button
+                        variant="contained"
+                        sx={{ width: "100%" }}
+                        disabled={isScanning === domain.id}
+                        onClick={() => setIsScanning(domain.id)}
+                      >
+                        {isScanning === domain.id ? "Scanning..." : "Scan"}
+                      </Button>
                     </td>
                   </tr>
                 ))}
@@ -118,7 +133,7 @@ const DashBoard = () => {
           setOpen={setOpen}
           success={apiDomainSuccess}
           setSuccess={setApiDomainSuccess}
-          organization={{ organization: { id: organizationId } }}
+          organization={{ organization: { id: user?.organizationId } }}
         />
       </div>
     </>
