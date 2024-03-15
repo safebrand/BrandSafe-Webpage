@@ -9,15 +9,12 @@ import { useNavigate } from "react-router-dom";
 const Domains = ({ success, organization }) => {
   const [domains, setDomains] = useState([]);
   const navigate = useNavigate();
-  console.log(organization);
 
   useEffect(() => {
     if (organization) {
       axios
         .get(
-          `${SERVER}/organization/${sessionStorage.getItem(
-            "organizationId"
-          )}/domain`
+          `${SERVER}/organization/${organization?.uuid}/domain`
         )
         .then((res) => {
           const domains = res.data.data;
@@ -33,9 +30,11 @@ const Domains = ({ success, organization }) => {
 
   const handleDelete = () => {};
 
+  console.log(domains.length)
+
   return (
     <>
-      {domains.length > 0 ? (
+      {domains?.length !== 0 ? (
         <div>
           <div className="flex gap-3 flex-wrap rounded-md bg-white p-4 ring-1 ring-sky-500">
             {domains?.map((domain, index) => {

@@ -249,14 +249,14 @@ export default function AfterLoginNavbar({ open, setOpen }) {
           {!open ? (
             <Link to="/">
               <div className="flex justify-normal items-center gap-3">
-                <img src="../Union.png" alt="logo" className="w-[20%]" />
+                <img src="/Union.png" alt="logo" className="w-[20%]" />
                 <p className="text-[24px] space-x-1">Brand Safe</p>
               </div>
             </Link>
           ) : (
             <Link to="/">
               <div className="flex justify-normal items-center gap-3">
-                <img src="../logo.png" alt="logo" className="w-[90%]" />
+                <img src="/logo.png" alt="logo" className="w-[90%]" />
               </div>
             </Link>
           )}

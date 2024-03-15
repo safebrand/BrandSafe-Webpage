@@ -5,7 +5,7 @@ const Logo = () => {
         <>
             <div className='flex gap-4 items-center'>
                 <div className='mt-4'>
-                    <img src="../Union.svg" alt="logo" />
+                    <img src="/Union.svg" alt="logo" />
                 </div>
                 <div className=''>
                     <h6 className='text-lg md:text-2xl'>welcome to</h6>
