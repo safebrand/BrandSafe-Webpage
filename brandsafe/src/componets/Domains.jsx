@@ -14,7 +14,11 @@ const Domains = ({ success, organization }) => {
   useEffect(() => {
     if (organization) {
       axios
-        .get(`${SERVER}/organization/${sessionStorage.getItem("organizationId")}/domain`)
+        .get(
+          `${SERVER}/organization/${sessionStorage.getItem(
+            "organizationId"
+          )}/domain`
+        )
         .then((res) => {
           const domains = res.data.data;
           setDomains(domains);
@@ -31,31 +35,37 @@ const Domains = ({ success, organization }) => {
 
   return (
     <>
-      <div className="flex gap-3 flex-wrap rounded-md bg-white p-4 ring-1 ring-sky-500">
-        {domains?.map((domain, index) => {
-          return (
-            <Chip
-              label={domain.domainURL}
-              key={index}
-              variant="outlined"
-              sx={{
-                color: "black",
-                backgroundColor: "#B4EDFF",
-                borderBlockColor: "#B4EDFF",
-              }}
-              onDelete={handleDelete}
-              icon={<Link color="black" />}
-            />
-          );
-        })}
-      </div>
-      <button
-        onClick={() => navigate("/dashboard")}
-        className="primary-button my-4"
-        disabled={domains?.length === 0}
-      >
-        Proceed
-      </button>
+      {domains.length > 0 ? (
+        <div>
+          <div className="flex gap-3 flex-wrap rounded-md bg-white p-4 ring-1 ring-sky-500">
+            {domains?.map((domain, index) => {
+              return (
+                <Chip
+                  label={domain.domainURL}
+                  key={index}
+                  variant="outlined"
+                  sx={{
+                    color: "black",
+                    backgroundColor: "#B4EDFF",
+                    borderBlockColor: "#B4EDFF",
+                  }}
+                  onDelete={handleDelete}
+                  icon={<Link color="black" />}
+                />
+              );
+            })}
+          </div>
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="primary-button my-4"
+            disabled={domains?.length === 0}
+          >
+            Proceed
+          </button>
+        </div>
+      ) : (
+        <div className="text-gray-400 text-lg">Please add your domain url.</div>
+      )}
     </>
   );
 };

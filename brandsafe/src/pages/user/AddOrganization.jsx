@@ -73,7 +73,11 @@ const AddOrganization = () => {
             </p>
           </div>
           <div className="md:pl-10 flex flex-col gap-10 md:w-[50%] py-10">
-            <h3 className="text-2xl">Enter your company's details</h3>
+            <h3 className="text-2xl">
+              {!organization.id
+                ? "Enter your company's details"
+                : "Your Company details"}
+            </h3>
             {!organization.id ? (
               <form
                 action=" "
@@ -139,8 +143,10 @@ const AddOrganization = () => {
             ) : (
               <div>
                 <div className="flex gap-4 mb-10">
-                  <div className="capitalize flex gap-4 text-2xl">
-                    <p className="text-2xl font-semibold">Company Name:</p>
+                  <div className="capitalize flex gap-4 text-2xl text-blue-500 font-bold">
+                    <p className="text-2xl font-semibold text-gray-600">
+                      Company Name:
+                    </p>
                     {organizationName}
                   </div>
                 </div>
