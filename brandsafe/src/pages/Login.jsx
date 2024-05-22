@@ -78,11 +78,11 @@ const Login = () => {
                         <div className='relative'>
                             <Link to="/forgotPassword"><h1 className="absolute -top-4 right-0 text-[#EB3434] text-center hover:underline">Forgot Password?</h1></Link>
                         </div>
-                        <Link to="/signup">
+                        {/* <Link to="/signup">
                             <h1 className="text-black  ">
                                 New to Brand Safe? <span className='text-blue-800 hover:underline'>Signup</span>
                             </h1>
-                        </Link>
+                        </Link> */}
                         <button className='primary-button'>Proceed</button>
                     </form>
                 </div>

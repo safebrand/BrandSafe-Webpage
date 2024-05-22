@@ -15,6 +15,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import { Avatar } from "@mui/material";
 import { useSelector } from "react-redux";
+import { Person } from "@mui/icons-material";
 
 const AppBar = styled(
   MuiAppBar,
@@ -51,7 +52,7 @@ function stringAvatar(name) {
       sx: {
         bgcolor: "#000000", // Set a background color for the default avatar
       },
-      children: "N", // Display a default character or icon for the avatar
+      children: <Person />, // Display a default character or icon for the avatar
     };
   }
 
@@ -120,13 +121,13 @@ export default function AfterLoginNavbar({ open, setOpen }) {
               id="profile"
               className="uppercase"
               sx={{ width: 70, height: 70 }}
-              {...stringAvatar(user?.firstName + " " + user.lastName)}
+              {...stringAvatar(user?.firstName + " " + user?.lastName)}
             />
           </div>
           <div>
             <p className="text-[18px]">
               {user?.firstName}
-              {` ${user.lastName}`}
+              {` ${user?.lastName}`}
             </p>
           </div>
         </div>
@@ -162,15 +163,7 @@ export default function AfterLoginNavbar({ open, setOpen }) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {sessionStorage.getItem("type") === "Trial" && (
-        <MenuItem className="flex flex-col items-center">
-          <div className="">Current Plan:{sessionStorage.getItem("type")}</div>
-          <div>
-            expires{" "}
-            {moment(sessionStorage.getItem("subscriptionExpiryOn")).fromNow()}
-          </div>
-        </MenuItem>
-      )}
+      <MenuItem className="flex flex-col items-center">Admin Pa</MenuItem>
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <ContactSupportIcon />
@@ -204,7 +197,7 @@ export default function AfterLoginNavbar({ open, setOpen }) {
             id="profile"
             className="uppercase"
             sx={{ width: 90, height: 90 }}
-            {...stringAvatar(user?.firstName + " " + user.lastName)}
+            {...stringAvatar(user?.firstName + " " + user?.lastName)}
           />
         </IconButton>
         <p>Profile</p>
@@ -260,6 +253,7 @@ export default function AfterLoginNavbar({ open, setOpen }) {
               </div>
             </Link>
           )}
+          <div className="flex flex-col items-center px-10">Admin Panel</div>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Link to="/support" className="hover:underline mt-[19px]">

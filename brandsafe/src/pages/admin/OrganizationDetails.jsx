@@ -1,25 +1,30 @@
 import { Button, Chip, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { SERVER } from "../../config/api";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { Add, OpenInNew } from "@mui/icons-material";
-import AddURL from "../../componets/addModel/AddURL";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Add, BackHand, OpenInNew } from "@mui/icons-material";
+// import AddURL from "../../componets/addModel/AddURL";
 import { useSelector } from "react-redux";
+import { SERVER } from "../../config/api";
 
-const DashBoard = () => {
+const OrganizationDetails = () => {
   const [domains, setDomains] = useState([]);
   const [domainsCount, setDomainsCount] = useState([]);
   const user = useSelector((state) => state?.persistedReducer.user);
   const [open, setOpen] = useState(false);
   const [apiDomainSuccess, setApiDomainSuccess] = useState(false);
   const [isScanning, setIsScanning] = useState();
+  const location = useLocation()
+  const organizationId = location.pathname?.split("/")[4]
+  const navigate = useNavigate();
+
+  console.log(organizationId)
 
   useEffect(() => {
-    if (user?.organizationId) {
+    if (organizationId) {
       axios
-        .get(`${SERVER}/organization/${user?.organizationId}/domain`)
+        .get(`${SERVER}/organization/${organizationId}/domain`)
         .then((res) => {
           const domains = res.data.data;
           setDomains(domains);
@@ -31,7 +36,7 @@ const DashBoard = () => {
 
       axios
         .get(
-          `${SERVER}/organization/${user?.organizationId}/domain/count-of-domains`
+          `${SERVER}/organization/${organizationId}/domain/count-of-domains`
         )
         .then((res) => {
           const domains = res.data.data;
@@ -42,13 +47,13 @@ const DashBoard = () => {
           console.log(err);
         });
     }
-  }, [user?.organizationId, apiDomainSuccess]);
+  }, [organizationId, apiDomainSuccess]);
 
   return (
     <>
-      <title>Dashboard | Brand Safe </title>
+      <title>OrganizationDetails | Brand Safe </title>
       <div className="flex flex-col gap-3">
-        <div className="mx-10 md:text-2xl">Dashboard</div>
+        <div className="mx-10 md:text-2xl"><div onClick={()=>navigate(-1)}><BackHand/></div>OrganizationDetails</div>
         <div className="mx-10 flex flex-col gap-4">
           {/* <div className='w-full md:w-[60%]'>
             <TextField value={sessionStorage.getItem('organizationName')} label="Company Name" readOnly sx={{ width: "100%", color: 'black' }} />
@@ -88,7 +93,6 @@ const DashBoard = () => {
                   <td className="px-4 py-2 text-center">
                     No of Similar Domains
                   </td>
-                  <td className="px-4 py-2 text-center">Action</td>
                 </tr>
               </thead>
               <tbody className="">
@@ -98,7 +102,7 @@ const DashBoard = () => {
                     className="divide-x-[1px] divide-gray-300 even:bg-gray-100"
                   >
                     {domain.similarDomainCount > 0 ? (
-                      <Link to={`${domain?.uuid}`}>
+                      <Link to={`domain/${domain?.uuid}`}>
                         <td className="px-4 py-2 text-blue-600 hover:underline cursor-pointer flex items-center gap-1 justify-center">
                           {domain.domainURL}
                           <OpenInNew fontSize="34px" />
@@ -112,31 +116,22 @@ const DashBoard = () => {
                     <td className="px-4 py-2 text-center">
                       {domain.similarDomainCount}
                     </td>
-                    <td className={`px-4 py-1 text-center min-w-[150px]`}>
-                      <Button
-                        variant="contained"
-                        sx={{ width: "100%" }}
-                        disabled={isScanning === domain.id}
-                      >
-                        {isScanning === domain.id ? "Scanning..." : "Scan"}
-                      </Button>
-                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
         </div>
-        <AddURL
+        {/* <AddURL
           open={open}
           setOpen={setOpen}
           success={apiDomainSuccess}
           setSuccess={setApiDomainSuccess}
-          organization={{ organization: { id: user?.organizationId } }}
-        />
+          organization={{ organization: { id: organizationId } }}
+        /> */}
       </div>
     </>
   );
 };
 
-export default DashBoard;
+export default OrganizationDetails;
