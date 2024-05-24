@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Add, BackHand, OpenInNew } from "@mui/icons-material";
+import { Add, ArrowBack, BackHand, OpenInNew } from "@mui/icons-material";
 // import AddURL from "../../componets/addModel/AddURL";
 import { useSelector } from "react-redux";
 import { SERVER } from "../../config/api";
@@ -53,7 +53,7 @@ const OrganizationDetails = () => {
     <>
       <title>OrganizationDetails | Brand Safe </title>
       <div className="flex flex-col gap-3">
-        <div className="mx-10 md:text-2xl"><div onClick={()=>navigate(-1)}><BackHand/></div>OrganizationDetails</div>
+        <div className="mx-10 md:text-2xl flex gap-2 items-center"><div onClick={()=>navigate(-1)}><ArrowBack/></div>OrganizationDetails</div>
         <div className="mx-10 flex flex-col gap-4">
          
           <div className="flex flex-col gap-2">
@@ -106,7 +106,6 @@ const OrganizationDetails = () => {
                       }}>
                         <td className="px-4 py-2 text-blue-600 hover:underline cursor-pointer flex items-center gap-1 justify-center">
                           {domain.domainURL}
-                          <OpenInNew fontSize="34px" />
                         </td>
                       </Link>
                     ) : (

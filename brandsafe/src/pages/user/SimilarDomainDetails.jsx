@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { SERVER } from "../../config/api";
 import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { toast } from "react-toastify";
-import { OpenInNew } from "@mui/icons-material";
+import { ArrowBack, OpenInNew } from "@mui/icons-material";
 
 const SimilarDomainDetails = () => {
   const location = useLocation();
@@ -14,6 +14,7 @@ const SimilarDomainDetails = () => {
   const [isOpenModel, setIsOpenModel] = useState(false);
   const [apiSuccess, setApiSuccess] = useState(false);
   const [selectedDomain, setSelectedDomain] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -49,16 +50,19 @@ const SimilarDomainDetails = () => {
     <>
       <title>Dashboard | Brand Safe </title>
       <div className="flex flex-col gap-3">
-        <div className="mx-10 md:text-2xl">
+        <div className="mx-10 md:text-2xl flex gap-2">
+          <div className="cursor-pointer" onClick={() => navigate(-1)}>
+            <ArrowBack />
+          </div>
           <Link to={"/dashboard"} className="hover:underline">
             Dashboard
           </Link>
           {" > "}Similar Domain Details
         </div>
-        <div>
+        <div className="mx-10 py-2 md:text-xl">
           {" "}
-          {location?.state?.domain?.domainURL && (
-            <span>Domain: {location?.state?.domain?.domainURL}</span>
+          {domains?.originalDomain?.originalDomainURL && (
+            <span>Domain: {domains?.originalDomain?.originalDomainURL}</span>
           )}
         </div>
         <div className="mx-10 flex flex-col gap-4 overflow-hidden overflow-x-auto">
@@ -112,7 +116,7 @@ const SimilarDomainDetails = () => {
                       } p-1 rounded-full animate-pulse`}
                     ></span>
                   </td>
-                 
+
                   <td className="px-4 py-2 text-center">
                     {domain.imageSimilarityScore?.toFixed(1)}
                   </td>

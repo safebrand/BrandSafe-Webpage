@@ -106,7 +106,6 @@ const DashBoard = () => {
                       >
                         <td className="px-4 py-2 text-blue-600 hover:underline cursor-pointer flex items-center gap-1 justify-center">
                           {domain.domainURL}
-                          <OpenInNew fontSize="34px" />
                         </td>
                       </Link>
                     ) : (

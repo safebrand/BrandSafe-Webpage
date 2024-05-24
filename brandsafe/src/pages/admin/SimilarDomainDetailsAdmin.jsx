@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { SERVER } from "../../config/api";
 import {
   Button,
@@ -11,7 +11,7 @@ import {
   Select,
 } from "@mui/material";
 import { toast } from "react-toastify";
-import { OpenInNew } from "@mui/icons-material";
+import { ArrowBack, OpenInNew } from "@mui/icons-material";
 
 const SimilarDomainDetailsAdmin = () => {
   const location = useLocation();
@@ -21,6 +21,7 @@ const SimilarDomainDetailsAdmin = () => {
   const [isOpenModel, setIsOpenModel] = useState(false);
   const [apiSuccess, setApiSuccess] = useState(false);
   const [selectedDomain, setSelectedDomain] = useState();
+  const navigate = useNavigate()
 
   useEffect(() => {
     axios
@@ -84,16 +85,19 @@ const SimilarDomainDetailsAdmin = () => {
     <>
       <title>Dashboard | Brand Safe </title>
       <div className="flex flex-col gap-3">
-        <div className="mx-10 md:text-2xl">
-          <Link to={"/dashboard"} className="hover:underline">
+        <div className="mx-10 md:text-2xl flex gap-2 items-center">
+          <div className="cursor-pointer" onClick={() => navigate(-1)}>
+            <ArrowBack />
+          </div>
+          <Link to={"/admin/dashboard"} className="hover:underline">
             Dashboard
           </Link>
           {" > "}Similar Domain Details
         </div>
-        <div>
+        <div className="mx-10 py-2 md:text-xl">
           {" "}
-          {location?.state?.domain?.domainURL && (
-            <span>Domain: {location?.state?.domain?.domainURL}</span>
+          {domains?.originalDomain?.originalDomainURL && (
+            <span>Domain: {domains?.originalDomain?.originalDomainURL}</span>
           )}
         </div>
         <div className="mx-10 flex flex-col gap-4 overflow-hidden overflow-x-auto">
@@ -141,7 +145,9 @@ const SimilarDomainDetailsAdmin = () => {
                       sx={{
                         color: domain.status === "LIVE" ? "green" : "red",
                       }}
-                      className={`ring-${domain.status === "LIVE" ? "green-500" : "red-500"}`}
+                      className={`ring-${
+                        domain.status === "LIVE" ? "green-500" : "red-500"
+                      }`}
                       onChange={(e) => {
                         handleStatusChange(e, domain);
                       }}

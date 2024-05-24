@@ -137,7 +137,11 @@ export default function AfterLoginNavbar({ open, setOpen }) {
         onClick={() => {
           sessionStorage.clear();
           localStorage.clear();
-          navigate("/login");
+          if (user.isAdmin) {
+            navigate("/admin/auth");
+          } else {
+            navigate("/login");
+          }
         }}
       >
         <LogoutIcon color="error" />
@@ -208,7 +212,11 @@ export default function AfterLoginNavbar({ open, setOpen }) {
         onClick={() => {
           sessionStorage.clear();
           localStorage.clear();
-          navigate("/login");
+          if (user.isAdmin) {
+            navigate("/admin/auth");
+          } else {
+            navigate("/login");
+          }
         }}
       >
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -255,7 +263,9 @@ export default function AfterLoginNavbar({ open, setOpen }) {
               </div>
             </Link>
           )}
-          {user?.isAdmin &&<div className="flex flex-col items-center px-10">Admin Panel</div>}
+          {user?.isAdmin && (
+            <div className="flex flex-col items-center px-10">Admin Panel</div>
+          )}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Link to="/contact" className="hover:underline mt-[19px]">

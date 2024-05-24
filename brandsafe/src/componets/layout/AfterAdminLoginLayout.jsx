@@ -3,12 +3,18 @@ import AfterLoginNavbar from "../navbar/AfterLoginNavbar";
 import User from "../sidebar/User";
 import { useSelector } from "react-redux";
 import Admin from "../sidebar/Admin";
+import { useNavigate } from "react-router-dom";
 
 const AfterAdminLoginLayout = () => {
-  const [role, setRole] = useState();
-  const [user, setUser] = useState();
   const [open, setOpen] = useState(true);
+  const navigate = useNavigate();
+  const user = useSelector((state) => state?.persistedReducer.user);
 
+  useEffect(() => {
+    if (!user?.id) {
+      navigate("/admin/auth");
+    }
+  },[user]);
 
   return (
     <>
