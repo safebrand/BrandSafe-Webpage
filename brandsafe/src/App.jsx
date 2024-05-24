@@ -13,6 +13,8 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import AfterAdminLoginLayout from "./componets/layout/AfterAdminLoginLayout";
 import Organization from "./pages/admin/Organization";
 import OrganizationDetails from "./pages/admin/OrganizationDetails";
+import ContactUs from "./pages/ContactUs";
+import SimilarDomainDetailsAdmin from "./pages/admin/SimilarDomainDetailsAdmin";
 
 function App() {
   return (
@@ -22,13 +24,14 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/verify-email/:token" element={<VerifyEmail />} />
+        <Route path="/contact" element={<ContactUs />} />
         <Route path="*" element={<PageNotFound />} />
 
         <Route path="/addOrganization" element={<AddOrganization />} />
 
         <Route path="/" element={<AfterLoginLayout />}>
           <Route path="dashboard" element={<DashBoard />} />
-          <Route path="dashboard/:uuid" element={<SimilarDomainDetails />} />
+          <Route path="dashboard/domain/:uuid" element={<SimilarDomainDetails />} />
           <Route path="profile" element={<Profile />} />
         </Route>
 
@@ -37,6 +40,7 @@ function App() {
         <Route path="admin" element={<AfterAdminLoginLayout />}>
           <Route path="dashboard" element={<Organization />} />
           <Route path="organization/:uuid" element={<OrganizationDetails />} />
+          <Route path="organization/domain/:uuid" element={<SimilarDomainDetailsAdmin />} />
         </Route>
       </Routes>
     </>

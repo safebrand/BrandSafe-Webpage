@@ -31,7 +31,7 @@ const AdminLogin = () => {
         const user = res.data?.data?.user;
         if (location.pathname?.includes("/admin")) {
           user.isAdmin
-            ? navigate("/admin/user/dashboard")
+            ? navigate("/admin/dashboard")
             : toast.error("Invalid user");
         } else {
           user?.organizationName

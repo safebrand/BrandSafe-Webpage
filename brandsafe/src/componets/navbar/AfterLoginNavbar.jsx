@@ -163,12 +163,14 @@ export default function AfterLoginNavbar({ open, setOpen }) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem className="flex flex-col items-center">Admin Pa</MenuItem>
+      {user?.isAdmin && (
+        <MenuItem className="flex flex-col items-center">Admin Panel</MenuItem>
+      )}
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <ContactSupportIcon />
         </IconButton>
-        <Link to="/support">
+        <Link to="/contact">
           <p>Support</p>
         </Link>
       </MenuItem>
@@ -253,10 +255,10 @@ export default function AfterLoginNavbar({ open, setOpen }) {
               </div>
             </Link>
           )}
-          <div className="flex flex-col items-center px-10">Admin Panel</div>
+          {user?.isAdmin &&<div className="flex flex-col items-center px-10">Admin Panel</div>}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <Link to="/support" className="hover:underline mt-[19px]">
+            <Link to="/contact" className="hover:underline mt-[19px]">
               Support
             </Link>
             <IconButton

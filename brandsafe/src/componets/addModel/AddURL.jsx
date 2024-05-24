@@ -11,7 +11,9 @@ const AddURL = ({ organization, open, setOpen, success, setSuccess }) => {
     const user = useSelector((state) => state?.persistedReducer.user);
 
     const addUrl = (data) => {
-        axios.post(`${SERVER}/organization/${user.organizationId}/domain`, data)
+        axios.post(`${SERVER}/organization/${user.organizationId}/domain`, {
+            ...data,originalDomain:1
+        })
             .then((res) => {
                 setOpen(!open)
                 setSuccess(!success)

@@ -2,14 +2,21 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SERVER } from "../../config/api";
-import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import { toast } from "react-toastify";
 import { OpenInNew } from "@mui/icons-material";
 
-const SimilarDomainDetails = () => {
+const SimilarDomainDetailsAdmin = () => {
   const location = useLocation();
   console.log(location);
-  const uuid = location.pathname.split("/")[3];
+  const uuid = location.pathname.split("/")[4];
   const [domains, setDomains] = useState([]);
   const [isOpenModel, setIsOpenModel] = useState(false);
   const [apiSuccess, setApiSuccess] = useState(false);
@@ -37,6 +44,34 @@ const SimilarDomainDetails = () => {
         toast.success(`${selectedDomain.domainURL} is reported successfully`);
         setIsOpenModel(false);
         setSelectedDomain();
+        setApiSuccess(!apiSuccess);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+        console.log(err);
+      });
+  };
+  const handleChange = (e, data) => {
+    axios
+      .put(`${SERVER}/similar-domain/by-uuid/${data.uuid}`, {
+        brandStatus: e.target.value,
+      })
+      .then((res) => {
+        toast.success(`${data.domainURL} is updated successfully`);
+        setApiSuccess(!apiSuccess);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+        console.log(err);
+      });
+  };
+  const handleStatusChange = (e, data) => {
+    axios
+      .put(`${SERVER}/similar-domain/by-uuid/${data.uuid}`, {
+        status: e.target.value,
+      })
+      .then((res) => {
+        toast.success(`${data.domainURL} is updated successfully`);
         setApiSuccess(!apiSuccess);
       })
       .catch((err) => {
@@ -97,22 +132,28 @@ const SimilarDomainDetails = () => {
                     </a>
                   </td>
                   <td className="px-4 py-2 text-center flex items-center gap-4 justify-center">
-                    <span
-                      className={`${
-                        domain.status === "LIVE"
-                          ? "text-green-500"
-                          : "text-red-500"
-                      }`}
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      size="small"
+                      defaultValue={domain.status}
+                      color={domain.status === "LIVE" ? "success" : "error"}
+                      sx={{
+                        color: domain.status === "LIVE" ? "green" : "red",
+                      }}
+                      className={`ring-${domain.status === "LIVE" ? "green-500" : "red-500"}`}
+                      onChange={(e) => {
+                        handleStatusChange(e, domain);
+                      }}
                     >
-                      {domain.status}
-                    </span>
-                    <span
-                      className={`${
-                        domain.status === "LIVE" ? "bg-green-500" : "bg-red-500"
-                      } p-1 rounded-full animate-pulse`}
-                    ></span>
+                      <MenuItem sx={{ color: "green" }} value={"LIVE"}>
+                        LIVE
+                      </MenuItem>
+                      <MenuItem sx={{ color: "red" }} value={"DOWN"}>
+                        DOWN
+                      </MenuItem>
+                    </Select>
                   </td>
-                 
                   <td className="px-4 py-2 text-center">
                     {domain.imageSimilarityScore?.toFixed(1)}
                   </td>
@@ -120,15 +161,18 @@ const SimilarDomainDetails = () => {
                     {domain.textSimilarityScore?.toFixed(1)}
                   </td>
                   <td className="px-4 py-2 text-center flex items-center gap-4 justify-center">
-                    <span
-                      className={`${
-                        domain.brandStatus === "SAFE"
-                          ? "text-green-500"
-                          : "text-red-500"
-                      }`}
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      size="small"
+                      defaultValue={domain.brandStatus}
+                      onChange={(e) => {
+                        handleChange(e, domain);
+                      }}
                     >
-                      {domain.brandStatus}
-                    </span>
+                      <MenuItem value={"SAFE"}>SAFE</MenuItem>
+                      <MenuItem value={"COMPROMISED"}>COMPROMISED</MenuItem>
+                    </Select>
                   </td>
                   <td className="px-4 py-2 text-center">
                     {domain.reported === false ? (
@@ -195,4 +239,4 @@ const SimilarDomainDetails = () => {
   );
 };
 
-export default SimilarDomainDetails;
+export default SimilarDomainDetailsAdmin;

@@ -16,7 +16,7 @@ const OrganizationDetails = () => {
   const [apiDomainSuccess, setApiDomainSuccess] = useState(false);
   const [isScanning, setIsScanning] = useState();
   const location = useLocation()
-  const organizationId = location.pathname?.split("/")[4]
+  const organizationId = location.pathname?.split("/")[3]
   const navigate = useNavigate();
 
   console.log(organizationId)
@@ -55,9 +55,7 @@ const OrganizationDetails = () => {
       <div className="flex flex-col gap-3">
         <div className="mx-10 md:text-2xl"><div onClick={()=>navigate(-1)}><BackHand/></div>OrganizationDetails</div>
         <div className="mx-10 flex flex-col gap-4">
-          {/* <div className='w-full md:w-[60%]'>
-            <TextField value={sessionStorage.getItem('organizationName')} label="Company Name" readOnly sx={{ width: "100%", color: 'black' }} />
-          </div> */}
+         
           <div className="flex flex-col gap-2">
             <h3 className="font-semibold">Your domain's</h3>
             <div className="flex gap-3 flex-wrap">
@@ -102,7 +100,10 @@ const OrganizationDetails = () => {
                     className="divide-x-[1px] divide-gray-300 even:bg-gray-100"
                   >
                     {domain.similarDomainCount > 0 ? (
-                      <Link to={`domain/${domain?.uuid}`}>
+                      <Link to={{
+                        pathname:`/admin/organization/domain/${domain.uuid}`,
+                        state:domain
+                      }}>
                         <td className="px-4 py-2 text-blue-600 hover:underline cursor-pointer flex items-center gap-1 justify-center">
                           {domain.domainURL}
                           <OpenInNew fontSize="34px" />

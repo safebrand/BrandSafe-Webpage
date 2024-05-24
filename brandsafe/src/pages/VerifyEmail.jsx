@@ -36,7 +36,7 @@ const VerifyEmail = () => {
         if (arr[arr?.length - 1]) {
             handleEmailVerify()
         }
-    })
+    },[arr[arr?.length - 1]])
 
     if (loading) {
         return (<Loading loading={loading} />)
@@ -52,7 +52,7 @@ const VerifyEmail = () => {
                 <div className='my-8 flex flex-col gap-10 px-4 md:px-80'>
                     <h2 className='text-2xl md:text-4xl font-semibold md:text-center'>Verify your Email</h2>
                     <form autoComplete='off' className='flex flex-col gap-4 md:w-[50%] md:mx-auto ' onSubmit={handleSubmit(handleEmailVerify)}>
-                        <TextField
+                        {/* <TextField
                             label="Token"
                             variant="outlined"
                             type="text"
@@ -61,7 +61,7 @@ const VerifyEmail = () => {
                             })}
                             error={!!errors.email}
                             helperText={errors.email?.message}
-                        />
+                        /> */}
                         <button className='primary-button'>Verify</button>
                     </form>
                 </div>

@@ -1,4 +1,4 @@
-import { Button, Chip, TextField } from "@mui/material";
+import { Button, Chip, TextField, Tooltip } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { SERVER } from "../../config/api";
 import { toast } from "react-toastify";
@@ -98,28 +98,37 @@ const DashBoard = () => {
                     className="divide-x-[1px] divide-gray-300 even:bg-gray-100"
                   >
                     {domain.similarDomainCount > 0 ? (
-                      <Link to={`${domain?.uuid}`}>
+                      <Link
+                        to={{
+                          pathname: `domain/${domain?.uuid}`,
+                          state: { domain },
+                        }}
+                      >
                         <td className="px-4 py-2 text-blue-600 hover:underline cursor-pointer flex items-center gap-1 justify-center">
                           {domain.domainURL}
                           <OpenInNew fontSize="34px" />
                         </td>
                       </Link>
                     ) : (
-                      <td className="px-4 py-2 text-blue-600 flex items-center gap-1 justify-center">
-                        {domain.domainURL}
-                      </td>
+                      <Tooltip title="once similar domain found then you can navigate next page">
+                        <td className="px-4 py-2 text-blue-600 flex items-center gap-1 justify-center">
+                          {domain.domainURL}
+                        </td>
+                      </Tooltip>
                     )}
                     <td className="px-4 py-2 text-center">
                       {domain.similarDomainCount}
                     </td>
                     <td className={`px-4 py-1 text-center min-w-[150px]`}>
-                      <Button
-                        variant="contained"
-                        sx={{ width: "100%" }}
-                        disabled={isScanning === domain.id}
-                      >
-                        {isScanning === domain.id ? "Scanning..." : "Scan"}
-                      </Button>
+                      <Link to={"/contact"}>
+                        <Button
+                          variant="contained"
+                          sx={{ width: "100%" }}
+                          disabled={isScanning === domain.id}
+                        >
+                          {isScanning === domain.id ? "Scanning..." : "Scan"}
+                        </Button>
+                      </Link>
                     </td>
                   </tr>
                 ))}

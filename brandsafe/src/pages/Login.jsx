@@ -30,8 +30,11 @@ const Login = () => {
                 user?.organizationName ? navigate('/dashboard') : navigate('/addOrganization')
             }).catch((err) => {
                 console.log(err)
-                toast.error(err.response.data.message);
                 setLoading(false)
+                toast.error(err?.response?.data?.message || "Internal Server Error");
+                if(err?.response?.data?.navUrl){
+                    navigate(`/admin/auth`)
+                }
             })
     }
 
