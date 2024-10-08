@@ -47,7 +47,7 @@ const DashBoard = () => {
   const handleScan = (domainId) =>{
     axios
     .post(
-      `${SERVER}/organization/${user?.organizationId}/${domainId}/scan/`
+      `${SERVER}/organization/${user?.organizationId}/domain/${domainId}/scan/`
     )
     .then((res) => {
       toast.success("Scan Craeted..");
