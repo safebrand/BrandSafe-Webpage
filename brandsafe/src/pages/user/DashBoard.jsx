@@ -44,6 +44,20 @@ const DashBoard = () => {
     }
   }, [user?.organizationId, apiDomainSuccess]);
 
+  const handleScan = (domainId) =>{
+    axios
+    .post(
+      `${SERVER}/organization/${user?.organizationId}/${domainId}/scan/`
+    )
+    .then((res) => {
+      toast.success("Scan Craeted..");
+    })
+    .catch((err) => {
+      toast.error(err.response.data.message);
+      console.log(err);
+    });
+  }
+
   return (
     <>
       <title>Dashboard | Brand Safe </title>
@@ -119,15 +133,15 @@ const DashBoard = () => {
                       {domain.similarDomainCount}
                     </td>
                     <td className={`px-4 py-1 text-center min-w-[150px]`}>
-                      <Link to={"/contact"}>
+             
                         <Button
+                        onClick={()=>handleScan(domain.uuid)}
                           variant="contained"
                           sx={{ width: "100%" }}
                           disabled={isScanning === domain.id}
                         >
                           {isScanning === domain.id ? "Scanning..." : "Scan"}
                         </Button>
-                      </Link>
                     </td>
                   </tr>
                 ))}
